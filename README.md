@@ -20,5 +20,22 @@ Wir werden den praktischen Teil des Seminars mit einem frisch installierten HA a
 
 Fragen zum Seminar bitte an gerald.koeck@aon.at senden.
 
+# Infrastruktur
+## Netzwerke
+### WLAN Sperlhof
+SSID: ????, Kennwort: ???
+
+### Iot-LAN
+SSID: **iot**, Kennwort **smarthome**
+HA-User für alle: **leo** mit Kennwort **passme**
+
+#### IP-Adressen und deren Nutzung:
+- 192.168.2.1 &emsp;Samba-Share mit leo/passme
+- 192.168.2.3 &emsp;Köcks Raspi mit zentralem MQTT-Broker (leo/passme)
+- 192.168.2.101-120 &emsp;Odroiden mit homeassistant-101 ...
+- 192.168.2.121 ... &emsp;Homeassistant-Instanzen auf Proxmox
+
+
+
 
 
