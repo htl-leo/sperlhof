@@ -1,0 +1,59 @@
+esphome:
+  name: myesp13
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "OaL/8YsCyyU8SoMX3thHAK+/q+nsqB8wVh5yGu+qeaE="
+
+ota:
+  password: "e61a0a6c2407f57ff8d34c00f0d6b5f6"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Myesp13 Fallback Hotspot"
+    password: "1v0mTOwmzrXn"
+
+captive_portal:
+
+web_server:
+  port: 80
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
+binary_sensor:
+  - platform: gpio
+    pin: 25
+    name: "myesp13 motion"
+    device_class: motion
+    
+sensor:
+  - platform: dht
+    model: DHT22
+    pin: 27
+    temperature:
+      name: "myesp13 temperature"
+    humidity:
+      name: "myesp13 humidity"
+    update_interval: 10s
+
+light:
+  - platform: status_led
+    name: "myesp13 led"
+    pin: GPIO2 
+    
