@@ -1,0 +1,10 @@
+433MHz Scanner
+https://www.youtube.com/watch?v=_gdXR1uklaY&ab_channel=AndreasSpiess
+
+Zigbee Temp/Hum
+https://de.aliexpress.com/item/1005004991491556.html?spm=a2g0o.order_list.order_list_main.11.163d5c5fL6pqjX&gatewayAdapt=glo2deu
+
+
+Sonoff Zigbee
+https://de.aliexpress.com/item/1005003637706867.html?spm=a2g0o.order_list.order_list_main.173.163d5c5fL6pqjX&gatewayAdapt=glo2deu 
+

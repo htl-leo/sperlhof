@@ -1,0 +1,74 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+mqtt: !include mqtt.yaml
+
+modbus:  
+  - name: eastron
+    type: rtuovertcp
+    host: 192.168.2.240
+    port: 8888
+    retry_on_empty: true
+    close_comm_on_error: false
+    retries: 10
+    timeout: 15
+    delay: 2
+    sensors: !include modbus_sensor_sdm630.yaml
+
+  - name: ModBusRelaisBoard
+    message_wait_milliseconds: 250 
+    delay: 1
+    retries: 3
+    retry_on_empty: true
+    close_comm_on_error: false
+    type: serial
+    baudrate: 9600
+    bytesize: 8
+    method: rtu
+    parity: N
+    port: /dev/ttyUSB0
+    stopbits: 1
+    switches:
+    - name: SW001
+      slave: 1
+      address: 0
+      write_type: coil
+    - name: SW002
+      slave: 1
+      address: 1
+      write_type: coil
+    - name: SW003
+      slave: 1
+      address: 2
+      write_type: coil
+    - name: SW004
+      slave: 1
+      address: 3
+      write_type: coil
+    - name: SW005
+      slave: 1
+      address: 4
+      write_type: coil
+    - name: SW006
+      slave: 1
+      address: 5
+      write_type: coil
+    - name: SW007
+      slave: 1
+      address: 6
+      write_type: coil
+    - name: SW008
+      slave: 1
+      address: 7
+      write_type: coil    
