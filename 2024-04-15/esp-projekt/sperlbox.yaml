@@ -23,7 +23,7 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "rgbled Fallback Hotspot"
+    ssid: "rgbled Fallback Mustermann"
     password: "CcQpyx5dWMJy"
 
 captive_portal:
@@ -40,7 +40,7 @@ mqtt:
 # Example configuration entry
 light:
   - platform: rgb
-    name: "RGB Lights"
+    name: "Lights Mustermann"
     red: r
     green: g
     blue: b
