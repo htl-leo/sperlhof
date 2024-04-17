@@ -1,7 +1,0 @@
-type: markdown
-content: '# {{ states.counter.people_counter.state }}'
-title: Personen
-card_mod:
-  style: |
-    ha-card {
-      width: 240px;

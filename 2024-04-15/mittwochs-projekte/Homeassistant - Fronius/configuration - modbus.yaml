@@ -1,0 +1,55 @@
+modbus:
+  - name: gen24
+    #close_comm_on_error: true
+    delay: 5
+    timeout: 5
+    type: tcp
+    host: 192.168.50.108
+    port: 502
+    sensors:
+    - name: gen24_line_freq_hz
+      unique_id: gen24_line_freq
+      slave: 1
+      address: 40085
+      input_type: holding
+      #count: 1
+      precision: 2
+      data_type: uint16
+      unit_of_measurement: Hz
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+
+    - name: gen24_line_freq_hz_sf
+      unique_id: gen24_line_freq_sf
+      slave: 1
+      address: 40086
+      input_type: holding
+      #count: 1
+      data_type: int16
+
+    - name: gen24_total_energy_wh
+      unique_id: gen24_tot_nrg_wh
+      slave: 1
+      address: 40093
+      input_type: holding
+      #count: 1
+      precision: 2
+      data_type: uint32
+      unit_of_measurement: Wh
+      device_class: energy
+      state_class: total_increasing
+
+    - name: gen24_total_energy_wh_sf
+      unique_id: gen24_tot_nrg_wh_sf
+      slave: 1
+      address: 40095
+      input_type: holding
+      #count: 1
+      data_type: int16
+
+    - name: gen24_state_of_charge
+      unique_id: gen24_soc
+      slave: 1
+      address: 40351
+      input_type: holding
