@@ -1,0 +1,90 @@
+uart:                                                                           
+  id: uart_bus
+  baud_rate: 115200
+  tx_pin: GPIO22
+  rx_pin: GPIO21
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/screekworkshop/custom_components_support_for_screek_l12
+      ref: main
+    components: [ld2412]
+
+ld2412:
+  id: ld2412_radar
+  uart_id: uart_bus
+
+text_sensor:
+  - platform: ld2412
+    version:
+      name: LD2412 FM Version
+      id: ld2412_fm_version
+    mac_address:
+      name: LD2412 Mac
+      id: ld2412_mac
+
+binary_sensor:
+  - platform: ld2412
+    has_target:
+      name: Presence
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+
+
+sensor:
+  - platform: uptime
+    name: ESP Uptime
+    id: sys_uptime
+    update_interval: 60s
+  - platform: ld2412
+    moving_distance:
+      name : Moving Distance
+      id: moving_distance
+    still_distance:
+      name: Still Distance
+      id: still_distance
+    moving_energy:
+      name: Move Energy
+    still_energy:
+      name: Still Energy
+    luminance:
+      name: luminance
+
+button:
+  - platform: restart
+    icon: mdi:power-cycle
+    name: "ESP Reboot"
+    entity_category: diagnostic
+  - platform: template
+    name: "LD2412 BLE Enable"
+    # disabled_by_default: True
+    entity_category: "config"
+    icon: mdi:bluetooth
+    on_press:
+      lambda: |-
+        id(ld2412_radar) -> ble_control(true);
+  - platform: template
+    name: "LD2412 BLE Disable"
+    # disabled_by_default: True
+    entity_category: "config"
+    icon: mdi:bluetooth-off
+    on_press:
+      lambda: |-
+        id(ld2412_radar) -> ble_control(false);
+  - platform: template
+    name: "LD2412 Reboot"
+    icon: mdi:radar
+    entity_category: "config"
+    on_press:
+      lambda: |-
+        id(ld2412_radar) -> reboot();
+  - platform: template
+    name: "LD2412 Factory Reset"
+    icon: mdi:restart
+    entity_category: "config"
+    on_press:
+      - lambda: |-
+          id(ld2412_radar) -> factoryReset();
