@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KI löst ein echtes Problem – Home Assistant Reparatur</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f4f4;
+      color: #222;
+      line-height: 1.6;
+    }
+    header {
+      background: #1a73e8;
+      color: white;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    header p { font-size: 1.1rem; opacity: 0.9; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1rem; }
+
+    section { background: white; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+    h2 { font-size: 1.4rem; color: #1a73e8; margin-bottom: 1rem; border-bottom: 2px solid #e8f0fe; padding-bottom: 0.5rem; }
+    h3 { font-size: 1.1rem; color: #333; margin: 1rem 0 0.4rem; }
+
+    .badge {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #1a73e8;
+      border-radius: 4px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .tool-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .tool-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .tool-card h4 { font-size: 1rem; color: #1a73e8; margin-bottom: 0.3rem; }
+    .tool-card p { font-size: 0.88rem; color: #555; }
+
+    .steps { counter-reset: step; }
+    .step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      counter-increment: step;
+      background: #1a73e8;
+      color: white;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .step-content p { font-size: 0.95rem; color: #444; }
+    .step-content strong { color: #222; }
+
+    code {
+      background: #f0f4ff;
+      border: 1px solid #cdd6f0;
+      border-radius: 4px;
+      padding: 0.15rem 0.4rem;
+      font-family: 'Consolas', monospace;
+      font-size: 0.88rem;
+      color: #c0392b;
+    }
+
+    .highlight-box {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin-top: 1rem;
+    }
+    .highlight-box p { font-size: 0.95rem; }
+
+    .analogy {
+      background: #e8f5e9;
+      border-left: 4px solid #43a047;
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin-top: 0.8rem;
+    }
+    .analogy p { font-size: 0.95rem; }
+
+    .problem-solution {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+    @media (max-width: 550px) {
+      .problem-solution { grid-template-columns: 1fr; }
+    }
+    .prob-box { background: #fce4ec; border-radius: 8px; padding: 1rem; }
+    .sol-box  { background: #e8f5e9; border-radius: 8px; padding: 1rem; }
+    .prob-box h4 { color: #c62828; margin-bottom: 0.4rem; }
+    .sol-box  h4 { color: #2e7d32; margin-bottom: 0.4rem; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: #888;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>KI löst ein echtes Problem</h1>
+  <p>Wie Claude mit Werkzeugen einen defekten Smart-Home-Server repariert hat</p>
+</header>
+
+<div class="container">
+
+  <!-- Das Problem -->
+  <section>
+    <h2>Das Problem: Ein Smart-Home ohne Updates</h2>
+    <p>Ein <strong>Home Assistant</strong>-Server – das ist eine Art „Zentrale" für ein Smart Home, die Lampen, Heizung und andere Geräte steuert – konnte sich nicht mehr selbst aktualisieren. Das System war in einer Sackgasse:</p>
+    <div class="problem-solution">
+      <div class="prob-box">
+        <h4>Das Problem</h4>
+        <p>Das Betriebssystem (HAOS 11.5) war sehr veraltet. Der Supervisor (Verwaltungsprogramm) bemerkte das und blockierte sich selbst – er wollte kein Update mehr durchführen.</p>
+      </div>
+      <div class="sol-box">
+        <h4>Die Lösung</h4>
+        <p>Claude hat das System mit verschiedenen Werkzeugen ferngesteuert und das Betriebssystem manuell auf Version 17.1 aktualisiert. Danach funktionierte alles wieder.</p>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <p><strong>Henne-Ei-Problem:</strong> Das Betriebssystem war zu alt → der Supervisor blockierte Updates → das Betriebssystem blieb alt. Ein Kreislauf, der manuell unterbrochen werden musste.</p>
+    </div>
+  </section>
+
+  <!-- Die Werkzeuge -->
+  <section>
+    <h2>Die verwendeten Werkzeuge</h2>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="icon">🔌</div>
+        <h4>MCP-Server</h4>
+        <p>Verbindet Claude direkt mit Home Assistant. Claude kann damit Zustände abfragen und Befehle senden.</p>
+      </div>
+      <div class="tool-card">
+        <div class="icon">🌐</div>
+        <h4>Playwright (Browser)</h4>
+        <p>Steuert einen Chrome-Browser automatisch. Wie ein Roboter, der auf Webseiten klickt.</p>
+      </div>
+      <div class="tool-card">
+        <div class="icon">⚡</div>
+        <h4>WebSocket-API</h4>
+        <p>Eine schnelle Echtzeit-Verbindung zur HA-Oberfläche – wie ein dauerhaft offenes Telefongespräch.</p>
+      </div>
+      <div class="tool-card">
+        <div class="icon">💻</div>
+        <h4>Web-Terminal</h4>
+        <p>Ein Terminal im Browser, über das echte Shell-Befehle auf dem Server ausgeführt werden können.</p>
+      </div>
+      <div class="tool-card">
+        <div class="icon">📋</div>
+        <h4>Skills</h4>
+        <p>Vordefinierte Anleitungen (Prompts), die Claude sagen, wie es bei bestimmten Aufgaben vorgehen soll.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MCP-Server erklärt -->
+  <section>
+    <h2>Was ist ein MCP-Server?</h2>
+    <p><span class="badge">Model Context Protocol</span></p>
+    <p>MCP steht für <em>Model Context Protocol</em> – ein Standard, mit dem eine KI wie Claude mit externen Programmen und Diensten sprechen kann.</p>
+
+    <div class="analogy">
+      <p><strong>Analogie:</strong> Stell dir vor, du bestellst eine Pizza per Handy. Dein Handy ist Claude, das Pizzeria-Bestellsystem ist der MCP-Server, und die Pizza ist die Information oder Aktion, die du brauchst. Du musst selbst nicht in die Pizzeria gehen – das Handy übernimmt die Kommunikation für dich.</p>
+    </div>
+
+    <h3>Was kann ein MCP-Server für Home Assistant?</h3>
+    <ul style="margin-top:0.5rem; padding-left:1.2rem; color:#444; font-size:0.95rem;">
+      <li>Gerätestatus abfragen: „Ist das Licht im Wohnzimmer an?"</li>
+      <li>Befehle senden: „Schalte die Heizung auf 21°C"</li>
+      <li>Konfigurationen lesen und ändern</li>
+      <li>Automatisierungen erstellen oder anpassen</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>Problem in diesem Fall:</strong> Weil das System „unsupported" (nicht unterstützt) war, hat der MCP-Server keine Verbindung bekommen. Claude musste einen anderen Weg finden – den Browser-Weg über Playwright.</p>
+    </div>
+  </section>
+
+  <!-- Skills erklärt -->
+  <section>
+    <h2>Was sind Skills?</h2>
+    <p>Skills sind <strong>vordefinierte Schritt-für-Schritt-Anleitungen</strong> für Claude. Sie werden als spezielle Befehle (z.B. <code>/update-config</code>) aufgerufen und erweitern Claudes Fähigkeiten für bestimmte Aufgaben.</p>
+
+    <div class="analogy">
+      <p><strong>Analogie:</strong> Stell dir vor, du hast ein Kochbuch. Du könntest aus dem Gedächtnis kochen – aber mit dem Kochbuch (= Skill) weißt du genau, welche Schritte du in welcher Reihenfolge machen musst, und vergisst nichts.</p>
+    </div>
+
+    <h3>In diesem Projekt verwendeter Skill: <code>update-config</code></h3>
+    <p style="margin-top:0.4rem; color:#444; font-size:0.95rem;">Dieser Skill hat Claude erklärt, wie man die Konfigurationsdateien von Claude Code richtig liest und ändert – zum Beispiel um den MCP-Server einzutragen, ohne bestehende Einstellungen zu überschreiben.</p>
+
+    <h3>Vorteile von Skills</h3>
+    <ul style="margin-top:0.5rem; padding-left:1.2rem; color:#444; font-size:0.95rem;">
+      <li>Claude muss nicht alles selbst „wissen" – es gibt fertige Rezepte</li>
+      <li>Komplexe Aufgaben werden in klare Schritte aufgeteilt</li>
+      <li>Skills können für jeden Anwendungsfall angepasst werden</li>
+      <li>Fehler werden vermieden, weil der Ablauf klar definiert ist</li>
+    </ul>
+  </section>
+
+  <!-- Der Lösungsweg -->
+  <section>
+    <h2>Der Lösungsweg Schritt für Schritt</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Verbindung herstellen</strong>
+          <p>Claude hat versucht, über den MCP-Server mit Home Assistant zu kommunizieren. Das schlug fehl – der Server war im „unsupported"-Modus.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Browser-Weg wählen</strong>
+          <p>Claude hat stattdessen Playwright genutzt und den Chrome-Browser automatisch zu <code>http://192.168.2.212:8123</code> navigiert.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>WebSocket-API verwenden</strong>
+          <p>Über JavaScript in der Browser-Konsole (<code>hass.callWS()</code>) konnte Claude direkt mit dem Home-Assistant-System kommunizieren und Informationen abrufen.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Problem diagnostizieren</strong>
+          <p>Die Abfrage ergab: HAOS Version 11.5, Supervisor Version 2025.08.3, Status: <code>supported: false</code>. Das System war 6 Hauptversionen hinter der aktuellen Version 17.1.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Terminal öffnen</strong>
+          <p>Claude hat das SSH-Web-Terminal des Systems gefunden und geöffnet, um direkte Systembefehle ausführen zu können.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <strong>Supervisor reparieren</strong>
+          <p>Befehl: <code>ha supervisor repair</code> → Das hat den Supervisor aus seinem blockierten Zustand befreit.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <strong>Aktuelle Version ermitteln</strong>
+          <p>Mit <code>curl</code> wurde die aktuelle HAOS-Version direkt vom Internet abgefragt: Version 17.1 für das ODROID-N2-Board.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-content">
+          <strong>Update erzwingen</strong>
+          <p>Befehl: <code>ha os update --version 17.1</code> → Das System hat das Update durchgeführt und sich neu gestartet.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">9</div>
+        <div class="step-content">
+          <strong>Erfolg bestätigen</strong>
+          <p>Nach dem Neustart: HAOS 17.1, Supervisor 2026.03.2, <code>supported: true</code>. Problem gelöst!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Was macht KI besonders? -->
+  <section>
+    <h2>Was macht KI dabei so besonders?</h2>
+    <ul style="padding-left:1.2rem; color:#444; font-size:0.95rem; line-height:1.9;">
+      <li><strong>Plan B denken:</strong> Als der direkte Weg (MCP) scheiterte, hat Claude selbstständig einen anderen Weg gefunden.</li>
+      <li><strong>Fehler lesen:</strong> Claude hat Fehlermeldungen analysiert und daraus die richtige Diagnose abgeleitet.</li>
+      <li><strong>Werkzeuge kombinieren:</strong> Browser + WebSocket + Terminal wurden zusammen genutzt, um das Problem zu lösen.</li>
+      <li><strong>Sicher arbeiten:</strong> Claude hat vor jedem kritischen Schritt überlegt, ob der Befehl sicher ist und ob er rückgängig gemacht werden kann.</li>
+      <li><strong>Dokumentieren:</strong> Alle wichtigen Informationen wurden in einer Gedächtnis-Datei gespeichert, damit zukünftige Sitzungen den Kontext kennen.</li>
+    </ul>
+  </section>
+
+  <!-- Fazit -->
+  <section>
+    <h2>Fazit</h2>
+    <p>Eine KI wie Claude ist mehr als ein Chatbot, der nur Texte schreibt. Mit den richtigen <strong>Werkzeugen (Tools)</strong> kann sie:</p>
+    <ul style="padding-left:1.2rem; margin-top:0.5rem; color:#444; font-size:0.95rem; line-height:1.9;">
+      <li>eigenständig Probleme analysieren und lösen</li>
+      <li>echte Software und Hardware fernsteuern</li>
+      <li>mit APIs und Webservices kommunizieren</li>
+      <li>einen Browser wie ein Mensch bedienen</li>
+      <li>aus Fehlern lernen und den Kurs anpassen</li>
+    </ul>
+    <div class="highlight-box" style="margin-top:1rem;">
+      <p><strong>Wichtig:</strong> Die KI hat hier nicht gezaubert – sie hat dieselben Werkzeuge benutzt, die auch ein erfahrener Systemadministrator verwenden würde. Der Unterschied: Claude konnte in Minuten analysieren, was sonst Stunden dauern könnte.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Erstellt mit Claude Code &amp; Home Assistant MCP Server · 2026</p>
+</footer>
+
+</body>
+</html>

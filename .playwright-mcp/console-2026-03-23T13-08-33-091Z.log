@@ -1,0 +1,3 @@
+[     283ms] [WARNING] The Material theme is deprecated and will be removed in Vaadin 25. @ http://192.168.2.212:8123/frontend_latest/22549.00e27826d4c6955d.js:1
+[   35985ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://192.168.2.212:8123/api/hassio/os/info:0
+[   40589ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://192.168.2.212:8123/api/hassio/os/info:0

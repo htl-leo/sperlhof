@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv --help)",
+      "Bash(py:*)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/esphome version:*)",
+      "Bash(dir:*)",
+      "Bash(.venv/Scripts/esphome config:*)",
+      "Bash(python3 -c \"import secrets, base64; print\\(base64.b64encode\\(secrets.token_bytes\\(32\\)\\).decode\\(\\)\\)\")"
+    ]
+  }
+}

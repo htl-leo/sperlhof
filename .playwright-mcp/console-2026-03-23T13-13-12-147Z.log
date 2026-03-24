@@ -1,0 +1,8 @@
+[  154351ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/token:0
+[  154351ms] [ERROR] [ttyd] fetch http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/token:  TypeError: Failed to fetch
+    at p.refreshToken (http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:2:580167)
+    at http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:2:583370
+    at t.EventEmitter.fire (http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:2:413218)
+    at O._keyDown (http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:2:306927)
+    at HTMLTextAreaElement.<anonymous> (http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:2:292589) @ http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:1
+[  156417ms] [ERROR] WebSocket connection to 'ws://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://192.168.2.212:8123/api/hassio_ingress/1dA83FLNaaWOagf8oudh1Rs0nWo-rJjvWnxxOG9UPuA/:1

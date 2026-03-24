@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__homeassistant__ha_get_system_health",
+      "mcp__homeassistant__ha_get_overview",
+      "mcp__homeassistant__ha_get_updates",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_type",
+      "Skill(update-config)",
+      "mcp__homeassistant__ha_search_entities",
+      "mcp__homeassistant__ha_config_set_automation",
+      "Bash(curl:*)",
+      "Bash(UUID=\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\")"
+    ]
+  }
+}
