@@ -1,0 +1,313 @@
+substitutions:
+  name: "koeck"
+  
+esphome:
+  name: ${name}
+  friendly_name: Alarmbox
+  # platform: esp32
+  # board: esp32-s3-devkitc-1
+  on_boot:
+      priority: 600
+      then:
+        - light.turn_on:
+            id: tft_light
+            brightness: 100%  
+        - component.update: alarmbox_display
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  framework:
+    # type: arduino
+    type: esp-idf
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # fast_connect: true
+  
+  ap:
+    ssid: "${name}_fallback"
+    password: "12345678"
+
+captive_portal:
+
+logger:
+
+ota:
+  password: !secret ota_password
+  platform: esphome
+
+web_server:
+  port: 80
+
+api:
+  encryption:
+    key: !secret api_key
+  on_client_connected:
+    - delay: 3s
+    - component.update: alarmbox_display
+# mqtt:
+#   broker: !secret mqtt_broker
+#   username: !secret mqtt_user
+#   password: !secret mqtt_password
+
+# Aktiviert die Bluetooth-Hardware
+# esp32_ble_tracker:
+#   scan_parameters:
+#     interval: 1100ms
+#     window: 1100ms
+#     active: true
+
+# Macht das Gerät zum Proxy für HA
+# bluetooth_proxy:
+#   active: true
+
+i2c:
+  sda: GPIO09  
+  scl: GPIO08  
+  # scan: true
+  id: bus_a
+
+uart:
+  id: ld2410_uart
+  rx_pin: GPIO11
+  tx_pin: GPIO10
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
+spi:
+  id: spi_bus
+  clk_pin: GPIO01
+  mosi_pin: GPIO02
+
+ld2410:
+  uart_id: ld2410_uart
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Presence
+      id: presence
+      on_press: # This is now correctly nested under the 'presence' binary sensor
+        - light.turn_on:
+            id: tft_light
+            brightness: 100% # Set to 100% when someone is present
+      on_release: # This is now correctly nested under the 'presence' binary sensor
+        - light.turn_on:
+            id: tft_light
+            brightness: 20% # Dim to 20% when no one is present      
+    has_moving_target:
+      name: Moving_Target
+    has_still_target:
+      name: Still_Target
+
+sensor:
+  - platform: ld2410
+    light:
+      name: light
+      device_class: "illuminance"
+      state_class: "measurement"
+      unit_of_measurement: "lx"
+    moving_distance:
+      name: Moving_Distance
+      id: ld2410_distance
+      device_class: "distance"
+      state_class: "measurement"
+      unit_of_measurement: "cm"
+    still_distance:
+      name: Still_Distance
+      device_class: "distance"
+      state_class: "measurement"
+      unit_of_measurement: "cm"
+    moving_energy:
+      name: Move_Energy
+      state_class: "measurement"
+    still_energy:
+      name: Still_Energy
+      state_class: "measurement"
+    detection_distance:
+      name: Detection_Distance
+      device_class: "distance"
+      state_class: "measurement"
+      unit_of_measurement: "cm"
+
+  - platform: wifi_signal
+    name: WiFi_Signal
+    update_interval: 60s
+
+  - platform: sht4x
+    i2c_id: bus_a
+    temperature:
+      name: Temperature
+      id: sht41_temperature
+      device_class: "temperature"
+      state_class: "measurement"  
+    humidity:
+      name: Humidity
+      id: sht41_humidity
+      device_class: "humidity"      
+      state_class: "measurement"
+    update_interval: 10s
+
+text_sensor:
+  - platform: ld2410
+    version:
+      name: "LD2410 Firmware Version"
+
+  - platform: homeassistant
+    name: "Alarmo Status"
+    id: alarmo_state
+    entity_id: alarm_control_panel.alarmo
+    on_value:
+      then:
+        - lambda: |-
+            ESP_LOGI("alarmo", "HA alarmo state: '%s'", x.c_str());
+        - component.update: alarmbox_display
+
+  - platform: homeassistant
+    name: "Offene Türen"
+    id: open_doors
+    entity_id: input_text.open_doors
+    on_value:
+      then:
+        - component.update: alarmbox_display
+
+globals:
+  - id: blink_on
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+interval:
+  - interval: 500ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(alarmo_state).state == "triggered";'
+          then:
+            - lambda: 'id(blink_on) = !id(blink_on);'
+            - component.update: alarmbox_display
+          else:
+            - lambda: 'id(blink_on) = false;'
+
+  - interval: 800ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(alarmo_state).state == "arming";'
+          then:
+            - switch.turn_on: buzzer_switch
+            - delay: 10ms
+            - switch.turn_off: buzzer_switch
+
+font:
+  - file: "fonts/Arial.ttf"
+    id: font1
+    size: 40
+  - file: "fonts/Arial.ttf"
+    id: font2
+    size: 32
+
+display:
+  - platform: ili9xxx
+    id: alarmbox_display
+    spi_id: spi_bus
+    model: ST7789V
+    dc_pin: GPIO04
+    reset_pin: GPIO05
+    cs_pin: GPIO03
+    data_rate: 20MHz
+    update_interval: 5s
+    invert_colors: true
+    rotation: 90
+    dimensions:
+      width: 240
+      height: 320
+    lambda: |-
+      std::string raw_state = id(alarmo_state).state;
+      std::string alarm_state = raw_state;
+      Color bg = Color(0, 0, 255);  // Standard: blau
+      Color text_color = Color(255, 255, 255);
+
+      if (raw_state == "arming" || raw_state == "pending") {
+        bg = Color(255, 255, 0);    // gelb
+        text_color = Color(0, 0, 0);
+      } else if (raw_state == "triggered") {
+        bg = id(blink_on) ? Color(255, 0, 0) : Color(0, 0, 0);  // blinkt rot/schwarz
+      } else if (raw_state.rfind("armed_", 0) == 0) {
+        bg = Color(255, 0, 0);      // rot
+      } else if (raw_state.empty() || raw_state == "unknown" || raw_state == "unavailable" || raw_state == "disarmed") {
+        bg = Color(0, 120, 0);      // dunkleres gruen fuer besseren Kontrast
+      }
+
+      it.fill(bg);
+      if (raw_state == "disarmed") {
+        alarm_state = "Unscharf";
+      } else if (raw_state == "armed_away") {
+        alarm_state = "Scharf Abwesend";
+      } else if (raw_state == "armed_home") {
+        alarm_state = "Scharf Zuhause";
+      } else if (raw_state == "armed_night") {
+        alarm_state = "Scharf Nacht";
+      } else if (raw_state == "armed_vacation") {
+        alarm_state = "Scharf Urlaub";
+      } else if (raw_state == "arming") {
+        alarm_state = "Wird Scharf";
+      } else if (raw_state == "pending") {
+        alarm_state = "Verzoegert";
+      } else if (raw_state == "triggered") {
+        alarm_state = "Alarm!";
+      } else if (raw_state.empty() || raw_state == "unknown" || raw_state == "unavailable") {
+        alarm_state = "Warte auf HA";
+      }
+      it.printf(0, 10, id(font1), text_color, "%s", alarm_state.c_str());
+
+      // Mitte: offene Türen/Sensor-Namen (aus HA input_text)
+      std::string doors = id(open_doors).state;
+      if (!doors.empty() && doors != "unknown" && doors != "unavailable") {
+        auto& doors_font = doors.length() > 15 ? id(font2) : id(font1);
+        it.printf(0, 95, doors_font, text_color, "%s", doors.c_str());
+      }
+
+      const bool temp_valid = !isnan(id(sht41_temperature).state);
+      const bool hum_valid = !isnan(id(sht41_humidity).state);
+
+      // Zeile 2 bleibt frei; Werte stehen gemeinsam in Zeile 3.
+      if (temp_valid && hum_valid) {
+        it.printf(0, 170, id(font1), text_color, "%.1f°C    %.1f%%", id(sht41_temperature).state, id(sht41_humidity).state);
+      } else if (temp_valid) {
+        it.printf(0, 170, id(font1), text_color, "%.1f°C", id(sht41_temperature).state);
+      } else if (hum_valid) {
+        it.printf(0, 170, id(font1), text_color, "%.1f%%", id(sht41_humidity).state);
+      }
+
+output:
+  # - platform: gpio
+  #   pin: GPIO06
+  #   id: backlight_on
+
+  - platform: ledc
+    pin: GPIO06
+    id: backlight_pwm
+    frequency: 20000Hz  
+
+  - platform: gpio
+    pin: GPIO07
+    id: buzzer_output
+
+switch:
+  - platform: output
+    name: Buzzer
+    output: buzzer_output
+    id: buzzer_switch
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "TFT Backlight"
+    id: tft_light
+    default_transition_length: 0s
+    restore_mode: ALWAYS_ON  # Geändert von RESTORE_DEFAULT_ON
