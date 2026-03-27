@@ -16,7 +16,10 @@
       "mcp__homeassistant__ha_search_entities",
       "mcp__homeassistant__ha_config_set_automation",
       "Bash(curl:*)",
-      "Bash(UUID=\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\")"
+      "Bash(UUID=\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\")",
+      "mcp__homeassistant__ha_get_device",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet --version)"
     ]
   }
 }
